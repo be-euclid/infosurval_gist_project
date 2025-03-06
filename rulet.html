@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>GIST 주변 식당 룰렛</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <title>식당 선정 룰렛</title>
+    <style>
+      body {
+        text-align: center;
+        font-family: "Arial", sans-serif;
+        background-color: #f8f9fa;
+      }
+      h1 {
+        text-align: center;
+        font-size: 50px;
+        display: inline-block;
+      }
+      #buttons {
+        justify-content: center;
+        display: flex;
+      }
+      .dark-mode {
+        background-color: black;
+        color: white;
+      }
+      #toggle-mode {
+        width: 120px;
+        height: 35px;
+        margin: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        background-color: rgb(193, 193, 193);
+        cursor: pointer;
+      }
+      #toggle-mode:hover {
+        background: #f7c3c3;
+      }
+      #toggle-mode:active {
+        background: #f49a9a;
+      }
+      #wheel-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px auto;
+        width: 100%;
+        position: relative;
+      }
+      header {
+        border-bottom: solid;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #wheel {
+        width: 640px;
+        height: 640px;
+        display: block;
+        border-radius: 50%;
+        border: 5px solid #444;
+        transition: transform 3s ease-out;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+
+      /* 삼각형 포인터 (당첨을 가리키는 부분) */
+      /* #pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);  
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid red; 
+            z-index: 10; 
+            pointer-events: none;  
+        } */
+      .container {
+        margin-top: 20px;
+        margin-bottom: 50px;
+      }
+      .button {
+        padding: 5px 7px;
+        margin: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .button-container {
+        margin: 3px 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 10px;
+      }
+
+      .button-container button,
+      #preset-options {
+        padding: 10px 20px;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      #preset-options {
+        width: 200px;
+        font-size: 15px;
+        background-color: #f0f0f0;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      /* 추가 버튼 */
+      .add-button {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .add-button:hover {
+        background-color: #218838;
+      }
+      .add-button:active {
+        background-color: #1e7e34;
+      }
+      /* 제거 버튼 */
+      .remove-button {
+        background-color: #dc3545;
+        color: white;
+      }
+      .remove-button:hover {
+        background-color: #c82333;
+      }
+      .remove-button:active {
+        background-color: #bd2130;
+      }
+      */프리셋 적용 버튼 */ .preset-button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 12px;
+      }
+      .preset-button:hover {
+        background-color: #0056b3;
+      }
+      .preset-button:active {
+        background-color: #004085;
+      }
+      /* 돌리기 버튼 */
+      #spin-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        background-color: #ff4d4d;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      #spin-button:disabled {
+        background-color: gray;
+        cursor: not-allowed;
+      }
+
+      #spin-button:hover:enabled {
+        background-color: #ff1a1a;
+      }
+
+      #result {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #333;
+      }
+
+      /* 중앙 점 스타일 */
+      #center-circle {
+        width: 20px;
+        height: 20px;
+        background: red;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+        z-index: 5;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>GIST 주변 식당 룰렛</h1>
+      <div id="buttons">
+        <button id="toggle-mode">🌙 다크 모드</button>
+        <button id="toggle-mode" onClick="location.href='gist.html'">
+          식당 소개
+        </button>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="button-container">
+        <input type="text" id="restaurant-input" placeholder="식당 이름 입력" />
+        <button class="add-button" onclick="addRestaurant()">추가</button>
+        <button class="remove-button" onclick="removeRestaurant()">제거</button>
+      </div>
+
+      <div class="button-container">
+        <select id="preset-options">
+          <option value="">미리 설정된 식당 세트 선택</option>
+          <option
+            value='["해이리", "삼복당", "첨단공원국밥", "제줏간","엉터리무한대패", "현옥", "후동이소금구이", "하르방국시","큰집감자탕뼈찜", "우대", "장가계", "보배반점", "연화", "취미정", "소코아", "류카츠", "영도씨", "필링돈까스", "정성카츠", "OBPC", "락앤도우", "아필코"]'
+          >
+            전체
+          </option>
+          <option
+            value='["해이리", "삼복당", "첨단공원국밥", "제줏간","엉터리무한대패", "현옥", "후동이소금구이", "하르방국시","큰집감자탕뼈찜", "우대"]'
+          >
+            한식
+          </option>
+          <option value='["장가계", "보배반점", "연화", "취미정"]'>중식</option>
+          <option
+            value='["소코아", "류카츠", "영도씨", "필링돈까스", "정성카츠"]'
+          >
+            일식
+          </option>
+          <option value='["OBPC", "락앤도우", "아필코"]'>양식</option>
+        </select>
+        <button class="preset-button" onclick="applyPreset()">적용</button>
+      </div>
+    </div>
+
+    <div id="wheel-container">
+      <div id="pointer"></div>
+      <!-- 당첨을 가리키는 삼각형 -->
+      <canvas id="wheel"></canvas>
+      <div id="center-circle"></div>
+      <!-- 중앙 원 -->
+    </div>
+
+    <button id="spin-button" onclick="spinWheel()">돌리기</button>
+    <p id="result"></p>
+
+    <script>
+      document
+        .getElementById("toggle-mode")
+        .addEventListener("click", function () {
+          let body = document.body;
+          let button = this;
+          // 다크 모드 토글
+          if (body.classList.contains("dark-mode")) {
+            body.classList.remove("dark-mode");
+            body.style.backgroundColor = "white";
+            body.style.color = "black";
+            button.textContent = "🌙 다크 모드";
+          } else {
+            body.classList.add("dark-mode");
+            body.style.backgroundColor = "black";
+            body.style.color = "white";
+            button.textContent = "☀️ 라이트 모드";
+          }
+        });
+
+      let restaurants = [];
+      const wheelCanvas = document.getElementById("wheel");
+      const ctx = wheelCanvas.getContext("2d");
+      wheelCanvas.width = 640;
+      wheelCanvas.height = 640;
+      let currentRotation = 0;
+      let isSpinning = false; // 회전 중인지 체크
+
+      function drawWheel() {
+        const sliceAngle = (2 * Math.PI) / restaurants.length;
+        ctx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+
+        restaurants.forEach((restaurant, i) => {
+          const startAngle = i * sliceAngle;
+          const endAngle = (i + 1) * sliceAngle;
+          const colors = [
+            "#f6d097",
+            "#20B2AA",
+            "#d0f367",
+            "#f6895a",
+            "#47f4eb",
+            "#32CD32",
+            "#8bb8f8",
+            "#c66766",
+            "#dd6dc3",
+            "#1c4dc8",
+            "#b2c02e",
+            "#6bcfdb",
+            "#f1f52c",
+          ];
+          ctx.fillStyle = colors[i % colors.length];
+          ctx.beginPath();
+          ctx.moveTo(320, 320);
+          ctx.arc(320, 320, 320, startAngle, endAngle);
+          ctx.fill();
+          ctx.stroke();
+          // 식당 개수에 따른 글씨 크기 조정
+          const fontSize = Math.max(8, Math.min(26, 160 / restaurants.length)); // 최소 12px, 최대 26px
+          ctx.fillStyle = i % 2 === 0 ? "black" : "white"; // 대비 색상 적용
+          ctx.font = `${fontSize}px Arial`; // 자동 크기 조정
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          // 텍스트 위치 조정
+          const textAngle = startAngle + sliceAngle / 2;
+          const textX = 320 + Math.cos(textAngle) * 200;
+          const textY = 320 + Math.sin(textAngle) * 200;
+          ctx.fillText(restaurant, textX, textY);
+        });
+      }
+
+      function addRestaurant() {
+        const input = document.getElementById("restaurant-input");
+        if (input.value && !restaurants.includes(input.value)) {
+          restaurants.push(input.value);
+          drawWheel();
+        }
+        input.value = "";
+      }
+
+      function removeRestaurant() {
+        const input = document.getElementById("restaurant-input").value;
+        restaurants = restaurants.filter((item) => item !== input);
+        drawWheel();
+      }
+
+      function spinWheel() {
+        if (restaurants.length === 0 || isSpinning) return;
+        isSpinning = true;
+        document.getElementById("spin-button").disabled = true;
+
+        const spinCount = Math.floor(Math.random() * 10) + 5;
+        const selectedIdx = Math.floor(Math.random() * restaurants.length);
+        const sliceAngle = (2 * Math.PI) / restaurants.length;
+        const finalAngle = 2 * Math.PI * spinCount + selectedIdx * sliceAngle;
+
+        currentRotation += finalAngle;
+        wheelCanvas.style.transition = "transform 3s ease-out";
+        wheelCanvas.style.transform = `rotate(${currentRotation}rad)`;
+
+        setTimeout(() => {
+          document.getElementById("result").textContent = swal({
+            title: `결과: ${restaurants[selectedIdx]}`,
+          });
+          document.getElementById(
+            "result"
+          ).textContent = `결과: ${restaurants[selectedIdx]}`;
+          isSpinning = false;
+          document.getElementById("spin-button").disabled = false;
+        }, 3000);
+      }
+
+      function applyPreset() {
+        const preset = document.getElementById("preset-options").value;
+        if (preset) {
+          restaurants = JSON.parse(preset);
+          usedColors = []; // preset 적용 시 색상 초기화
+          drawWheel();
+        }
+      }
+    </script>
+  </body>
+</html>
