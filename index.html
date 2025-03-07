@@ -44,9 +44,9 @@
         text-align: center;
       }
       .stitle {
-        width: 70px;
+        width: 60px;
         border-right: solid 1px;
-        padding: 20px;
+        padding: 10px;
       }
       #main {
         display: flex;
@@ -96,8 +96,8 @@
         width: 100%;
         border: none;
         border-radius: 10px;
-        max-width: 400px;
-        max-height: 30px;
+        max-width: 500px;
+        max-height: 40px;
         text-align: center;
         transition: background 0.3s ease-in-out;
       }
@@ -109,6 +109,12 @@
         border-radius: 5px;
       }
       @media (max-width: 768px) { /* 태블릿 및 작은 화면 */
+        .stitle {
+          width: 40px;
+          border-right: solid 1px;
+          padding: 5px;
+        }
+
         .sidebar button {
           width: 40%;
           font-size: 0.3rem;
@@ -117,6 +123,12 @@
       }
       
       @media (max-width: 480px) { /* 모바일 화면 */
+        .stitle {
+          width: 20px;
+          border-right: solid 1px;
+          padding: 4px;
+        }
+
         .sidebar button {
           width: 40%;    
           font-size: 0.2rem;
