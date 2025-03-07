@@ -104,8 +104,8 @@
         transition: background 0.3s ease-in-out;
       }
       .sidebar button {
-        max-width: 100px; /* 버튼 최대 크기 */
-        min-width: 20px; /* 버튼 최소 크기 */
+        max-width: 120px; /* 버튼 최대 크기 */
+        min-width: 15px; /* 버튼 최소 크기 */
         padding: 5px 10px;
         font-size: 0.7rem; /* 기본 글씨 크기 */
         border-radius: 5px;
@@ -115,11 +115,12 @@
           width: 30px;
           border-right: solid 1px;
           padding: 10px;
+          margin-left: 1px;
         }
 
         .sidebar button {
-          width: 27%;
-          font-size: 0.2rem;
+          width: 25%;
+          font-size: 0.15rem;
           padding: 2px 4px;
         }
       }
@@ -129,11 +130,12 @@
           width: 10px;
           border-right: solid 1px;
           padding: 10px;
+          margin-left: 1px;
         }
 
         .sidebar button {
-          width: 27%;    
-          font-size: 0.15rem;
+          width: 25%;    
+          font-size: 0.12rem;
           padding: 1px 3px;
         }
       }
@@ -457,7 +459,7 @@
           : '';  // 해시태그가 없으면 빈 문자열
 
           document.getElementById("explain").innerHTML = `
-          <h2 class="gothic-regular">${selected.title}</h2>
+          <h2 class="gothic-regular"><strong>${selected.title}</strong></h2>
           <p class="font-regular">${cleanDesc}</p>
           <div class="icon-container">
             ${hashtags.map(tag => `<span class="red-box">${tag}</span>`).join('')}
