@@ -57,8 +57,8 @@
       }
 
       #wheel {
-        width: 640px;
-        height: 640px;
+        width: 480px;
+        height: 480px;
         display: block;
         border-radius: 50%;
         border: 5px solid #444;
@@ -287,8 +287,8 @@
       let restaurants = [];
       const wheelCanvas = document.getElementById("wheel");
       const ctx = wheelCanvas.getContext("2d");
-      wheelCanvas.width = 640;
-      wheelCanvas.height = 640;
+      wheelCanvas.width = 480;
+      wheelCanvas.height = 480;
       let currentRotation = 0;
       let isSpinning = false; // 회전 중인지 체크
 
@@ -316,20 +316,20 @@
           ];
           ctx.fillStyle = colors[i % colors.length];
           ctx.beginPath();
-          ctx.moveTo(320, 320);
-          ctx.arc(320, 320, 320, startAngle, endAngle);
+          ctx.moveTo(240, 240);
+          ctx.arc(240, 240, 240, startAngle, endAngle);
           ctx.fill();
           ctx.stroke();
           // 식당 개수에 따른 글씨 크기 조정
-          const fontSize = Math.max(8, Math.min(26, 160 / restaurants.length)); // 최소 12px, 최대 26px
+          const fontSize = Math.max(7, Math.min(21, 130 / restaurants.length)); 
           ctx.fillStyle = i % 2 === 0 ? "black" : "white"; // 대비 색상 적용
           ctx.font = `${fontSize}px Arial`; // 자동 크기 조정
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           // 텍스트 위치 조정
           const textAngle = startAngle + sliceAngle / 2;
-          const textX = 320 + Math.cos(textAngle) * 200;
-          const textY = 320 + Math.sin(textAngle) * 200;
+          const textX = 240 + Math.cos(textAngle) * 160;
+          const textY = 240 + Math.sin(textAngle) * 160;
           ctx.fillText(restaurant, textX, textY);
         });
       }
