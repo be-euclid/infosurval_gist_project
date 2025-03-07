@@ -39,17 +39,20 @@
       .category {
         display: flex;
         margin: 20px;
+        margin-left: 5px;
       }
       .store {
         padding: 20px;
         text-align: center;
       }
       .stitle {
-        width: 60px;
+        width: 70px;
         border-right: solid 1px;
         padding: 10px;
         padding-bottom: 10px;
+        padding-right: 3px;
       }
+
       #main {
         display: flex;
       }
@@ -93,7 +96,7 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 15px;
         flex-direction: row;
         width: 100%;
         border: none;
@@ -111,6 +114,18 @@
         border-radius: 5px;
       }
       @media (max-width: 768px) { /* 태블릿 및 작은 화면 */
+        .container {
+          flex-direction: column;
+        }
+        .sidebar,
+        .content {
+          width: 100%;
+        }
+        .category { 
+          display: flex;
+          margin: 10px;
+          margin-left: 5px;
+        }
         .stitle {
           width: 30px;
           border-right: solid 1px;
@@ -120,22 +135,36 @@
 
         .sidebar button {
           width: 25%;
-          font-size: 0.15rem;
+          font-size: 0.30rem;
           padding: 2px 4px;
         }
       }
       
       @media (max-width: 480px) { /* 모바일 화면 */
+        h1 {
+        text-align: center;
+        font-size: 30px;
+        display: inline-block;
+        margin: 12px;
+      }
+
+        .category { 
+          display: flex;
+          margin: 7px;
+          margin-left: 3px;
+        }
         .stitle {
           width: 10px;
           border-right: solid 1px;
           padding: 10px;
           margin-left: 1px;
+          font-size: 10px;
         }
 
         .sidebar button {
-          width: 25%;    
-          font-size: 0.12rem;
+          width: 25%;
+          max-height: 20px;   
+          font-size: 0.22rem;
           padding: 1px 3px;
         }
       }
@@ -159,16 +188,6 @@
         font-style: normal;
       }
 
-
-      @media (max-width: 768px) {
-        .container {
-          flex-direction: column;
-        }
-        .sidebar,
-        .content {
-          width: 100%;
-        }
-      }
       .rating {
         display: flex;
         justify-content: center;
@@ -248,7 +267,7 @@
             <button onclick="changeContent('content4')">제줏간</button>
             <button onclick="changeContent('content5')">엉터리무한대패</button>
             <button onclick="changeContent('content6')">현옥</button>
-            <button onclick="changeContent('content7')">후동이 소금구이</button>
+            <button onclick="changeContent('content7')">후동이소금구이</button>
             <button onclick="changeContent('content8')">하르방국시</button>
             <button onclick="changeContent('content9')">큰집감자탕뼈찜</button>
             <button onclick="changeContent('content22')">우대</button>
