@@ -208,6 +208,7 @@
         <button id="toggle-mode" onClick="location.href='index.html'">
           식당 소개
         </button>
+        <button id="toggle-mode" onclick="resetWheel()">룰렛 초기화</button>
       </div>
     </header>
 
@@ -238,7 +239,6 @@
             일식
           </option>
           <option value='["OBPC", "락앤도우", "아필코"]'>양식</option>
-          <option value="clear">초기화</option>
         </select>
         <button class="preset-button" onclick="applyPreset()">적용</button>
       </div>
@@ -337,6 +337,10 @@
       function removeRestaurant() {
         const input = document.getElementById("restaurant-input").value;
         restaurants = restaurants.filter((item) => item !== input);
+        drawWheel();
+      }
+      function resetWheel() {
+        restaurants = [];
         drawWheel();
       }
 
