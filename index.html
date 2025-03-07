@@ -5,6 +5,9 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Gowun+Dodum&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
       body {
@@ -107,6 +110,17 @@
         background: #f49a9a;
         transition: 0.2s;
       }
+      .font-regular {
+        font-family: "Gowun Dodum", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      .gothic-regular {
+        font-family: "Gothic A1", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
 
       @media (max-width: 768px) {
         .container {
@@ -147,6 +161,11 @@
         -moz-text-fill-color: transparent; /* 파이어폭스 호환 */
         color: transparent;
       }
+      .fixed-size-img {
+        width: 95%;  /* 부모 요소 기준 30% 크기 */
+        height: 60vh;  /* 뷰포트 높이의 40% */
+        object-fit: cover;  /* 이미지 비율 유지하며 채우기 */
+      }
     </style>
   </head>
   <body>
@@ -157,6 +176,7 @@
         <button id="toggle-mode" onClick="location.href='rulet.html'">
           룰렛 모드
         </button>
+        <button id="toggle-mode" onclick="resetContent()">초기화</button>
       </div>
     </header>
     <div id="main">
@@ -368,18 +388,18 @@
           let selected = info[type];
 
           document.getElementById("explain").innerHTML = `
-                <h2>${selected.title}</h2>
-                <p>${selected.desc}</p>
-                <img src="${selected.img}" alt="${
-            selected.title
-          }" style="max-width:90%; height: auto;">
-                <p>평점: ${selected.rating}/5 
-                  <div class="rating">
-                    ${generateStars(selected.rating)}
-                  </div>
-                </p>
-            `;
+          <h2 class="gothic-regular">${selected.title}</h2>
+          <p class="font-regular">${selected.desc}</p>
+          <div class="img-wrapper">
+            <img class="fixed-size-img" src="${selected.img}" alt="${selected.title}">
+          </div>
+          <p>평점: ${selected.rating}/5 
+            <div class="rating">
+              ${generateStars(selected.rating)}
+            </div>
+          </p>`;
         }
+
         function generateStars(rating) {
           let fullStars = Math.floor(rating); // 가득 찬 별 개수
           let halfStar = rating % 1 !== 0;
@@ -396,6 +416,14 @@
             starsHTML += '<span class="empty-star">★</span>';
           }
           return starsHTML;
+        }
+        function resetContent() {
+          document.getElementById("explain").innerHTML = 
+          `<h2>환영합니다!</h2>
+          <p>왼쪽의 식당 이름을 클릭하면 설명이 여기에 표시됩니다.</p>
+          <p>최대한 프랜차이즈 종류의 식당은 포함하지 않았습니다.</p>
+          <p>제작자가 평가하는 태그와 별점이 있습니다.(주관적이므로 참고)</p>
+          <img src="gist.jpg" width="90%" />`;
         }
       </script>
     </div>
