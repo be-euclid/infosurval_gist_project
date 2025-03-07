@@ -48,6 +48,7 @@
         width: 60px;
         border-right: solid 1px;
         padding: 10px;
+        padding-bottom: 10px;
       }
       #main {
         display: flex;
@@ -111,29 +112,29 @@
       }
       @media (max-width: 768px) { /* 태블릿 및 작은 화면 */
         .stitle {
-          width: 40px;
+          width: 30px;
           border-right: solid 1px;
-          padding: 5px;
+          padding: 10px;
         }
 
         .sidebar button {
-          width: 40%;
-          font-size: 0.3rem;
-          padding: 3px 6px;
+          width: 27%;
+          font-size: 0.2rem;
+          padding: 2px 4px;
         }
       }
       
       @media (max-width: 480px) { /* 모바일 화면 */
         .stitle {
-          width: 20px;
+          width: 10px;
           border-right: solid 1px;
-          padding: 4px;
+          padding: 10px;
         }
 
         .sidebar button {
-          width: 40%;    
-          font-size: 0.2rem;
-          padding: 2px 5px;
+          width: 27%;    
+          font-size: 0.15rem;
+          padding: 1px 3px;
         }
       }
 
@@ -198,8 +199,10 @@
       }
       .fixed-size-img {
         width: 95%;  /* 부모 요소 기준 30% 크기 */
-        height: 60vh;  /* 뷰포트 높이의 40% */
+        max-height: 60vh;  /* 뷰포트 높이의 40% */
         object-fit: cover;  /* 이미지 비율 유지하며 채우기 */
+        aspect-ratio: 4/3; /* 가로:세로 비율 유지 */
+        overflow: hidden;
       }
       .icon-container {
         display: flex;
