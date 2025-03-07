@@ -102,7 +102,7 @@
         border: none;
         border-radius: 10px;
         max-width: 500px;
-        max-height: 40px;
+        max-height: 30px;
         text-align: center;
         transition: background 0.3s ease-in-out;
       }
@@ -135,7 +135,8 @@
 
         .sidebar button {
           width: 25%;
-          font-size: 0.30rem;
+          gap: 4px;
+          font-size: 0.25rem;
           padding: 2px 4px;
         }
       }
@@ -157,14 +158,17 @@
           width: 10px;
           border-right: solid 1px;
           padding: 10px;
+          padding-bottom: 20px;
+          padding-top: 20px;
           margin-left: 1px;
           font-size: 10px;
         }
 
         .sidebar button {
-          width: 25%;
+          max-width: 25%;
           max-height: 20px;   
-          font-size: 0.22rem;
+          font-size: 0.17rem;
+          gap: 1px;
           padding: 1px 3px;
         }
       }
@@ -222,7 +226,7 @@
         width: 95%;  /* 부모 요소 기준 30% 크기 */
         max-height: 60vh;  /* 뷰포트 높이의 40% */
         object-fit: cover;  /* 이미지 비율 유지하며 채우기 */
-        aspect-ratio: 4/3; /* 가로:세로 비율 유지 */
+        aspect-ratio: 16/13; /* 가로:세로 비율 유지 */
         overflow: hidden;
       }
       .icon-container {
@@ -302,7 +306,7 @@
         </div>
       </div>
       <div class="content" id="explain">
-        <h2>환영합니다!</h2>
+        <h2 style="text-align: center;">환영합니다!</h2>
         <p>왼쪽의 식당 이름을 클릭하면 설명이 여기에 표시됩니다.</p>
         <p>최대한 프랜차이즈 종류의 식당은 포함하지 않았습니다.</p>
         <p>제작자가 평가하는 태그와 별점이 있습니다.(주관적이므로 참고)</p>
@@ -478,7 +482,7 @@
           : '';  // 해시태그가 없으면 빈 문자열
 
           document.getElementById("explain").innerHTML = `
-          <h2 class="gothic-regular"><strong>${selected.title}</strong></h2>
+          <h2 class="gothic-regular" style="text-align: center;"><strong>${selected.title}</strong></h2>
           <p class="font-regular">${cleanDesc}</p>
           <div class="icon-container">
             ${hashtags.map(tag => `<span class="red-box">${tag}</span>`).join('')}
@@ -512,7 +516,7 @@
         }
         function resetContent() {
           document.getElementById("explain").innerHTML = 
-          `<h2>환영합니다!</h2>
+          `<h2 style="text-align: center;">환영합니다!</h2>
           <p>왼쪽의 식당 이름을 클릭하면 설명이 여기에 표시됩니다.</p>
           <p>최대한 프랜차이즈 종류의 식당은 포함하지 않았습니다.</p>
           <p>제작자가 평가하는 태그와 별점이 있습니다.(주관적이므로 참고)</p>
