@@ -48,6 +48,8 @@
         align-items: center;
         margin: 20px auto;
         width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
         position: relative;
       }
       header {
@@ -57,8 +59,8 @@
       }
 
       #wheel {
-        width: 480px;
-        height: 480px;
+        width: 440px;
+        height: 440px;
         display: block;
         border-radius: 50%;
         border: 5px solid #444;
@@ -66,6 +68,13 @@
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         z-index: 1;
       }
+      @media (max-width: 440px) {
+        #wheel-container {
+          width: 90vw;
+          position: relative;
+          left: 50%;
+          transform: translateX(-50%);
+        }}
 
       /* 삼각형 포인터 (당첨을 가리키는 부분) */
       /* #pointer {
@@ -81,6 +90,7 @@
             z-index: 10; 
             pointer-events: none;  
         } */
+         
       .container {
         margin-top: 20px;
         margin-bottom: 50px;
@@ -160,6 +170,7 @@
       /* 돌리기 버튼 */
       #spin-button {
         padding: 10px 20px;
+        margin: 20px;
         font-size: 16px;
         font-weight: bold;
         border: none;
@@ -199,7 +210,7 @@
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
         z-index: 5;
       }
-      @media (max-width: 480px) { /* 모바일 화면 */
+      @media (max-width: 440px) { /* 모바일 화면 */
         h1 {
         text-align: center;
         font-size: 30px;
@@ -287,8 +298,8 @@
       let restaurants = [];
       const wheelCanvas = document.getElementById("wheel");
       const ctx = wheelCanvas.getContext("2d");
-      wheelCanvas.width = 480;
-      wheelCanvas.height = 480;
+      wheelCanvas.width = 440;
+      wheelCanvas.height = 440;
       let currentRotation = 0;
       let isSpinning = false; // 회전 중인지 체크
 
@@ -316,20 +327,20 @@
           ];
           ctx.fillStyle = colors[i % colors.length];
           ctx.beginPath();
-          ctx.moveTo(240, 240);
-          ctx.arc(240, 240, 240, startAngle, endAngle);
+          ctx.moveTo(wheelCanvas.width/2, wheelCanvas.height/2);
+          ctx.arc(wheelCanvas.width/2, wheelCanvas.height/2, wheelCanvas.height/2, startAngle, endAngle);
           ctx.fill();
           ctx.stroke();
           // 식당 개수에 따른 글씨 크기 조정
-          const fontSize = Math.max(7, Math.min(21, 130 / restaurants.length)); 
+          const fontSize = Math.max(7, Math.min(20, 130 / restaurants.length)); 
           ctx.fillStyle = i % 2 === 0 ? "black" : "white"; // 대비 색상 적용
           ctx.font = `${fontSize}px Arial`; // 자동 크기 조정
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           // 텍스트 위치 조정
           const textAngle = startAngle + sliceAngle / 2;
-          const textX = 240 + Math.cos(textAngle) * 160;
-          const textY = 240 + Math.sin(textAngle) * 160;
+          const textX = wheelCanvas.width/2 + Math.cos(textAngle) * 160;
+          const textY = wheelCanvas.height/2 + Math.sin(textAngle) * 160;
           ctx.fillText(restaurant, textX, textY);
         });
       }
