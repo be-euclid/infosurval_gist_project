@@ -113,6 +113,35 @@
         font-size: 0.7rem; /* 기본 글씨 크기 */
         border-radius: 5px;
       }
+      @media (max-width: 900px) {
+        h1 {  
+          text-align: center; 
+          font-size: 40px;
+          display: inline-block;   
+          margin: 15px;
+        }
+        .container {
+          flex-direction: column;
+        }
+        .sidebar,
+        .content {
+          width: 100%;
+        }
+        .category { 
+          display: flex;
+          margin: 10px;
+          margin-left: 5px;
+        }
+        .stitle {
+          width: 30px;
+          border-right: solid 1px;
+          padding: 10px;
+          padding-bottom: 50px;
+          padding-top: 50px;
+          margin-left: 1px;
+        }
+      }
+
       @media (max-width: 768px) { /* 태블릿 및 작은 화면 */
         h1 {  
           text-align: center; 
@@ -142,9 +171,10 @@
         }
 
         .sidebar button {
-          width: 25%;
-          gap: 3px;
-          font-size: 0.20rem;
+          max-width: 25%;
+          max-height: 45px;   
+          gap: 4px;
+          font-size: 0.50rem;
           padding: 2px 4px;
         }
       }
