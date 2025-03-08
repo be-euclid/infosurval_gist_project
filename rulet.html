@@ -238,8 +238,7 @@
     <div class="container">
       <div class="button-container">
         <input type="text" id="restaurant-input" placeholder="식당 이름 입력" />
-        <button class="add-button" onclick="addRestaurant()">추가</button>
-        <button class="remove-button" onclick="removeRestaurant()">제거</button>
+        <button id="add-remove-button" class="add-button" onclick="handleRestaurant()">추가</button>
       </div>
 
       <div class="button-container">
@@ -279,22 +278,34 @@
 
     <script>
       document
-        .getElementById("toggle-mode")
-        .addEventListener("click", function () {
+      document.addEventListener("DOMContentLoaded", function () {
           let body = document.body;
-          let button = this;
-          // 다크 모드 토글
-          if (body.classList.contains("dark-mode")) {
-            body.classList.remove("dark-mode");
-            body.style.backgroundColor = "white";
-            body.style.color = "black";
-            button.textContent = "🌙 다크 모드";
-          } else {
+          let button = document.getElementById("toggle-mode");
+          
+          // 저장된 다크 모드 상태 확인
+          let darkMode = localStorage.getItem("darkMode");
+          if (darkMode === "enabled") {
             body.classList.add("dark-mode");
             body.style.backgroundColor = "black";
             body.style.color = "white";
             button.textContent = "☀️ 라이트 모드";
           }
+          button.addEventListener("click", function () {
+            if (body.classList.contains("dark-mode")) {
+              body.classList.remove("dark-mode");
+              body.style.backgroundColor = "white";
+              body.style.color = "black";
+              button.textContent = "🌙 다크 모드";
+              localStorage.setItem("darkMode", "disabled"); // 다크 모드 비활성화 저장
+            } 
+            else {
+              body.classList.add("dark-mode");
+              body.style.backgroundColor = "black";
+              body.style.color = "white";
+              button.textContent = "☀️ 라이트 모드";
+              localStorage.setItem("darkMode", "enabled"); // 다크 모드 활성화 저장
+            }
+          });
         });
 
       let restaurants = [];
@@ -347,20 +358,40 @@
         });
       }
 
-      function addRestaurant() {
-        const input = document.getElementById("restaurant-input");
-        if (input.value && !restaurants.includes(input.value)) {
-          restaurants.push(input.value);
-          drawWheel();
-        }
-        input.value = "";
-      }
-
-      function removeRestaurant() {
+      function updateButton() {
         const input = document.getElementById("restaurant-input").value;
-        restaurants = restaurants.filter((item) => item !== input);
-        drawWheel();
+        const button = document.getElementById("add-remove-button");
+        if (restaurants.includes(input)) {
+          button.textContent = "제거";
+          button.classList.remove("add-button");
+          button.classList.add("remove-button");
+        } 
+        else {
+          button.textContent = "추가";
+          button.classList.remove("remove-button");
+          button.classList.add("add-button");
+        }
       }
+      function handleRestaurant() {
+        const input = document.getElementById("restaurant-input");
+        const value = input.value.trim();
+    
+        if (!value) return; // 입력값이 없으면 종료
+    
+        if (restaurants.includes(value)) {
+          // 입력값이 이미 배열에 있으면 제거
+          restaurants = restaurants.filter((item) => item !== value);
+        } 
+        else {
+          // 없으면 추가
+          restaurants.push(value);
+        }
+        drawWheel(); // 룰렛 다시 그림 
+        input.value = ""; // 입력값 초기화 
+        updateButton(); // 버튼 상태 업데이트
+      }
+      // 입력 필드가 변경될 때 버튼 상태 업데이트
+      document.getElementById("restaurant-input").addEventListener("input", updateButton);
       function resetWheel() {
         restaurants = [];
         drawWheel();
